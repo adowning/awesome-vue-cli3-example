@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": " https://ashdevtools.surge.sh/?from=device-screen",
+  "start_url": "https://andrewsadmin.netlify.com/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#4DBA87"

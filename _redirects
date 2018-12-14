@@ -1,0 +1,4 @@
+#/*    /index.html   200
+#/token/*        https://www.humanity.com/oauth2/token.php 200
+#/humanityx/*        https://www.humanity.com/api/v2/:splat 200!
+
