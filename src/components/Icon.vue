@@ -33,7 +33,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style>
 .svg-icon {
   width: $font-medium;
   height: $font-medium;

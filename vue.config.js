@@ -126,13 +126,16 @@ module.exports = {
   },
 
   configureWebpack: {
+    devtool: 'source-map',
     plugins: [
-      isProductionEnvFlag ? new PrerenderSPAPlugin({
-        // Required - The path to the webpack-outputted app to prerender.
-        staticDir: path.join(__dirname, 'dist'),
-        // Required - Routes to render.
-        routes: ['/', '/explore']
-      }) : () => {},
+      isProductionEnvFlag
+        ? new PrerenderSPAPlugin({
+            // Required - The path to the webpack-outputted app to prerender.
+            staticDir: path.join(__dirname, 'dist'),
+            // Required - Routes to render.
+            routes: ['/', '/explore']
+          })
+        : () => {},
       // NEED FIX 🚧 : HardSourceWebpackPlugin Will Cause Error.
       // new HardSourceWebpackPlugin(),
       isProductionEnvFlag ? new SizePlugin() : () => {}
@@ -157,13 +160,13 @@ module.exports = {
       favicon16: 'img/icons/fuji-mountain-16x16.png',
       appleTouchIcon: 'img/icons/apple-touch-icon-152x152.png',
       maskIcon: 'img/icons/safari-pinned-tab.svg',
-      msTileImage: 'img/icons/msapplication-icon-144x144.png',
+      msTileImage: 'img/icons/msapplication-icon-144x144.png'
     },
     // configure the workbox plugin (GenerateSW or InjectManifest)
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
       // swSrc is required in InjectManifest mode.
-      swSrc: 'public/service-worker.js',
+      swSrc: 'public/service-worker.js'
       // ...other Workbox options...
     }
   },
@@ -176,7 +179,21 @@ module.exports = {
     https: false,
     hotOnly: false,
     // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
-    proxy: null, // string | Object
+    proxy: {
+      '^/token': {
+        target: 'https://www.humanity.com/oauth2/token.php',
+        ws: true,
+        changeOrigin: true
+      },
+      '^/humanity': {
+        target: 'https://www.humanity.com/api/v2',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/humanity': ''
+        }
+      }
+    },
     before: app => {}
   },
 

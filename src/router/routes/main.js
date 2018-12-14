@@ -2,11 +2,19 @@
 
 export default [
   {
-    path: '/explore',
+    path: '/login',
     meta: {
       ignoreAuth: true,
-      title: '发现更多'
+      title: 'login'
     },
-    component: resolve => require(['@pages/ExploreMore'], resolve)
+    component: resolve => require(['@components/pages/login'], resolve)
+  },
+  {
+    path: '/profile:id',
+    meta: {
+      ignoreAuth: true,
+      title: 'profile'
+    },
+    component: resolve => require(['@components/profile/Index.vue'], resolve)
   }
 ]

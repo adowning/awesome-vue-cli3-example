@@ -36,27 +36,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.arrow-component {
-  border: 1px solid $brand;
-  border-width: 0 2px 2px 0;
-  display: inline-block;
-  padding: 4px;
-  &.right {
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-  }
-  &.left {
-    transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
-  }
-  &.top {
-    transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
-  }
-  &.bottom {
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-  }
-}
-</style>
+<style></style>

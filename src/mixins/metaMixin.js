@@ -4,13 +4,12 @@ export default {
   data() {
     const vm = this
     return {
-      title: '首页',
-      siteTitle: 'Vue-Cli3 实践参考',
+      title: 'asdf',
+      siteTitle: 'Vue-Cli3 ',
       titleTemplate: '%s - ' + vm.siteTitle,
       keywords:
         'vue,vue-cli3,webpack,vuex,vue-router,element-ui,TypeScript,ESLint,Prettier,Dayjs,Markdown,Jest,PWA,开箱即用,脚手架,模板',
-      description:
-        '此为基于 Vue-Cli3 搭建的开箱即用 Vue 脚手架模版，致力于探究更高效地构建优质 Web 应用。'
+      description: 'asdf'
     }
   },
 

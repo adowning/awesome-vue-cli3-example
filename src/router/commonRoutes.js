@@ -1,20 +1,17 @@
 /**
- * /*
- * 通用路由配置，需要放在配置项数组的末端
- *
  * @format
  */
 
-import NotFound from '@pages/partials/NotFound'
+import NotFound from '@components/pages/partials/NotFound'
 
 export default [
   {
     path: '/',
     meta: {
       title: 'Vue-cli Overall Example',
-      ignoreAuth: true
+      ignoreAuth: false
     },
-    component: resolve => require(['@pages/Homepage'], resolve)
+    component: resolve => require(['@components/pages/homepage'], resolve)
   },
   {
     path: '/',
