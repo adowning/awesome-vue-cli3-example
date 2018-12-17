@@ -1,5 +1,4 @@
 /** @format */
-
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -9,6 +8,19 @@ import './registerServiceWorker'
 import cordova from './cordova'
 
 import bus from './helper/bus-event'
+
+// import VueSocketIO from 'vue-socket.io'
+// Vue.use(
+//   new VueSocketIO({
+//     debug: true,
+//     connection: 'https://api.ashdevtools.com',
+//     vuex: {
+//       store,
+//       actionPrefix: 'SOCKET_',
+//       mutationPrefix: 'SOCKET_'
+//     }
+//   })
+// )
 
 window.store = store
 if (process.env.NODE_ENV === 'development') {
@@ -20,10 +32,8 @@ if (process.env.NODE_ENV === 'development') {
     }
   }, 2000)
 }
-bus.on('system-ready', () => {
-  new Vue({
-    router,
-    store,
-    render: h => h(App)
-  }).$mount('#app')
-})
+new Vue({
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app')

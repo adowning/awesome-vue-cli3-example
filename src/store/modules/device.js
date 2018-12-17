@@ -4,7 +4,7 @@ import { DeviceApi } from '../../helper/api'
 import * as types from '../mutation-types'
 import bus from '../../helper/bus-event'
 import cache, { keys } from '../../helper/cache'
-import CloudApi from '../../helper/cloudboost'
+import CloudApi from '../../helper/cbAPI'
 import * as humanity from '../../helper/humanity'
 let cloudApi = new CloudApi()
 
@@ -119,8 +119,8 @@ const actions = {
     let scrollPosition = supportPageOffset
       ? window.pageYOffset
       : isCSS1Compat
-        ? document.documentElement.scrollTop
-        : document.body.scrollTop
+      ? document.documentElement.scrollTop
+      : document.body.scrollTop
 
     if (scrollPosition + 400 > realScroll) {
       bus.emit('scroll-bottom', state.resolution)

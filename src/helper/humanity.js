@@ -32,7 +32,6 @@ export async function setToken() {
 
   return await AxiosInstanceHumanityToken.post('/', options).then(response => {
     cache.setItem('humanityToken', response.data.access_token)
-    console.log(response.data.access_token)
   })
 }
 //www.humanity.com/api/v2/timeclocks/status/2736727/1?access_token=xxxxxxx

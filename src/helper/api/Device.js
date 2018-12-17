@@ -1,7 +1,7 @@
 /** @format */
 
 // import TaggedApi from "../../classes/TaggedApi";
-import CloudApi from '../cloudboost'
+import CloudApi from '../cbAPI'
 
 class DeviceApi extends CloudApi {
   start() {

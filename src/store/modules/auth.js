@@ -3,7 +3,7 @@ import * as types from '../mutation-types'
 import { AuthApi, UserApi } from '../../helper/api'
 import router from '../../router'
 import cache, { keys } from '../../helper/cache'
-import CloudApi from '../../helper/cloudboost'
+import CloudApi from '../../helper/cbAPI'
 import * as humanity from '../../helper/humanity'
 import globalStore from '../index'
 
@@ -43,6 +43,7 @@ function getClockStatusOf1444044() {
 function clockIn(store, creds) {
   return humanity.clockInUser(creds.humanityId).then(
     response => {
+      console.log(response)
       // onClockIn(store, response.user)
       // store.commit(types.DEVICE_ADD_USER_USERLIST, employeeId)
       if (response.status == '13') {
@@ -56,10 +57,11 @@ function clockIn(store, creds) {
           router.push({ name: 'home' })
           return Promise.resolve()
         })
-    },
-    ({ data, status }) => {
-      return Promise.reject(data)
+      // return Promise.reject(response)
     }
+    // ({ data, status }) => {
+    //   return Promise.reject(data)
+    // }
   )
 }
 
@@ -75,8 +77,11 @@ function checkAuth(store) {
   })
 }
 function clockOut(store, creds) {
-  return authApi.clockOut(creds.humanityId).then(
+  // return authApi.clockOut(creds.humanityId).then(
+  return humanity.clockOutUser(creds.humanityId).then(
     response => {
+      console.log(response)
+
       // onClockIn(store, response.user)
       // store.commit(types.DEVICE_ADD_USER_USERLIST, employeeId)
 
@@ -91,10 +96,10 @@ function clockOut(store, creds) {
           router.push({ name: 'login' })
           return Promise.resolve(response)
         })
-    },
-    ({ data, status }) => {
-      return Promise.reject(data)
     }
+    // ({ data, status }) => {
+    //   return Promise.reject(data)
+    // }
   )
 }
 function firstTime(store, firstTime) {

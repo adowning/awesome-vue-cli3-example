@@ -1,6 +1,7 @@
 /** @format */
 
 import Vue from 'vue'
+import * as Fingerprint2 from 'fingerprintjs2'
 
 if (typeof String.prototype.startsWith !== 'function') {
   Window.String.prototype.startsWith = function(prefix) {
@@ -9,6 +10,19 @@ if (typeof String.prototype.startsWith !== 'function') {
 }
 
 export default {
+  async getFingerprint() {
+    console.log('fp gening')
+    const secure = await new Promise(resolve => {
+      new Fingerprint2.get(components => {
+        let values = components.map(function(component) {
+          return component.value
+        })
+        resolve(Fingerprint2.x64hash128(values.join(''), 31))
+      })
+    })
+    return secure
+  },
+
   resMsg(res) {
     let key = {
       zh: 'Chinese',

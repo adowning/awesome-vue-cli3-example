@@ -8,6 +8,7 @@ export const $auth = require('./auth').default
 export const $utils = require('./utils').default
 export const $lodash = require('./lodash').default
 export const $document = require('./document').default
+export const $CB = require('./cbAPI').default
 // export const $cb = require('./cloudboost').default
 /* jshint esversion: 6 */
 /*

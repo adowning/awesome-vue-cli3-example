@@ -11,11 +11,20 @@ const lang = Cookies.get('lang') || 'en'
 Vue.config.lang = lang
 
 /* ------------------------Vue Global Variable------------------------------ */
-import { $apis, $utils, $document, $auth, $lodash, $cloudApi } from '@helper'
+import CB from './helper/CB'
+// CB.CloudApp.init(
+//   // 'https://localhost:8443',
+//   // 'https://api.ashdevtools.com',
+//   'https://localhost:8443',
+//   'andrewsDev',
+//   'c4ecdb3f-b741-4824-9393-2bbc0ab3b47b'
+// )
+Vue.use(CB)
+import { $apis, $utils, $document, $auth, $lodash, $CB } from '@helper'
 Vue.prototype.$_ = $lodash
 Vue.prototype.$apis = $apis
 Vue.prototype.$utils = $utils
-Vue.prototype.$cloudApi = $cloudApi
+// Vue.prototype.$CB = CB
 Vue.prototype.$auth = $auth
 Vue.prototype.$document = $document
 Vue.prototype.$devmode = false
@@ -34,7 +43,7 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 Vue.use(Vuetify, {
   theme: {
-    primary: colors.yellow.darken1,
+    primary: '#3b5997',
     primarydark: colors.yellow.darken4,
     primarylight: colors.yellow.lighten5,
     accent: colors.yellow.accent4,
@@ -48,6 +57,20 @@ Vue.use(Vuetify, {
     info: colors.blue.base,
     success: colors.green.base,
     warning: colors.orange.base
+    // primary: colors.yellow.darken1,
+    // primarydark: colors.yellow.darken4,
+    // primarylight: colors.yellow.lighten5,
+    // accent: colors.yellow.accent4,
+    // primarytext: colors.grey.darken4,
+    // secondarytext: colors.grey.darken1,
+    // divider: colors.grey.lighten1,
+    // secondary: colors.yellow.lighten5,
+    // submit: colors.yellow.darken1,
+    // editicon: colors.grey.lighten2,
+    // error: colors.red.base,
+    // info: colors.blue.base,
+    // success: colors.green.base,
+    // warning: colors.orange.base
   },
   iconfont: 'fa4', // 'md' || 'mdi' || 'fa' || 'fa4'
   options: {

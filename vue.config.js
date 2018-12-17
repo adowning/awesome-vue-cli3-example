@@ -174,12 +174,19 @@ module.exports = {
   // configure webpack-dev-server behavior
   devServer: {
     open: process.platform === 'darwin',
-    host: '0.0.0.0',
-    port: 8080,
-    https: false,
+    // host: 'mobile.ashdevtools.com',
+    port: 2096,
+    // https: false,
+    disableHostCheck: true,
+
     hotOnly: false,
     // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
     proxy: {
+      // '^/': {
+      //   target: 'https://api.ashdevtools.com',
+      //   ws: true,
+      //   changeOrigin: true
+      // },
       '^/token': {
         target: 'https://www.humanity.com/oauth2/token.php',
         ws: true,
@@ -193,6 +200,10 @@ module.exports = {
           '^/humanity': ''
         }
       }
+    },
+    https: {
+      key: fs.readFileSync('./certs/cf_mobile.key'),
+      cert: fs.readFileSync('./certs/cf_mobile.pem')
     },
     before: app => {}
   },

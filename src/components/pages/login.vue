@@ -5,12 +5,24 @@
     <v-layout align-center column fill-height mt-3>
       <section v-if="!startScan && !scanned">
         <v-flex xs12>
-          <v-alert :value="true" type="warning" outline>
-            <span class="title">This device requires an owner before it can be used</span>
-          </v-alert>
+          <!-- <v-alert :value="true" type="warning" outline> -->
+          <span class="display-1">This device requires an owner before it can be used</span>
+          <!-- </v-alert> -->
         </v-flex>
-        <v-flex xs12 sm6 mx-5>
-          <v-btn block color="primary" @click="fireUpScanner">Clock In</v-btn>
+        <v-flex xs12 sm12>
+          <v-btn
+            class="mb-4"
+            :disabled="!systemready"
+            block
+            primary
+            color="primary"
+            @click="fireUpScanner"
+          >Clock In</v-btn>
+          <span class="mt-2 subheading">
+            By clocking in with this device you agree that it is now under your
+            care according to our
+          </span>
+          <hr>
         </v-flex>
       </section>
       <v-layout v-if="scanned && !agreed" mt-3>
@@ -61,6 +73,7 @@ import { mapGetters, mapActions } from 'vuex'
 import dialogs from '../../helper/dialogs.js'
 import bus from '../../helper/bus-event'
 import spinner from '../spinner.vue'
+import { $auth } from '@helper'
 
 export default {
   name: 'login',
@@ -83,9 +96,12 @@ export default {
       username: null,
       startScan: false,
       agreed: false,
+      showNotRegistered: false,
+      // registered: $auth.checkSession(),
       accept: false,
       scanned: false,
       items: [],
+      systemready: false,
       select: false,
       userList: [],
       checkboxId: false,
@@ -95,7 +111,8 @@ export default {
   computed: {
     ...mapGetters({
       checkLogin: 'auth/checkLogin',
-      isMobile: 'device/isMobile'
+      isMobile: 'device/isMobile',
+      registered: $auth.checkSession()
     })
   },
   methods: {
@@ -182,7 +199,11 @@ export default {
     },
     agree() {
       this.agreed = true
-      this.login()
+      if (this.registered != 'badDevice') {
+        this.login()
+      } else {
+        this.showNotRegistered == true
+      }
     },
     logout(result) {
       if (process.env.NODE_ENV == 'development') {
@@ -193,7 +214,7 @@ export default {
       }
       this.doClockOut(result).then(
         data => {
-          console.log(data)
+          this.clockOut = false
           location.reload()
         },
         error => {
@@ -250,7 +271,10 @@ export default {
       this.router.back()
     }
   },
-  mounted() {
+  created() {
+    bus.on('system-ready', () => {
+      this.systemready = true
+    })
     bus.on('clear-click', this.onClearClick)
     // if (!this.isMobile) {
     //   this.$refs.txt_user.focus();

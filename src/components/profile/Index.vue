@@ -347,7 +347,7 @@ export default {
     }
   },
   created: function() {
-    console.log(this.$CloudApi.getObject())
+    console.log(this.$cloudApi.getObject())
     this.employee = this.$cb.getObject(this.$route.params.id, 'Employee')
     console.log(this.employee)
     console.log(this.employee)

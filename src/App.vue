@@ -1,7 +1,7 @@
 <!-- @format -->
 
 <template>
-  <v-app id="app">
+  <v-app id="app" dark>
     <v-expansion-panel v-if="this.$devmode">
       <v-expansion-panel-content>
         <div slot="header">developer shit</div>
@@ -14,9 +14,11 @@
           <v-btn block @click="createTabletTable">createTabletTable</v-btn>
           <v-btn block @click="addTablet">addTablet</v-btn>
           <v-btn block @click="relateTabletUser">relateTabletUser</v-btn>
-          <!-- <v-btn block @click="createEmployee">createEmployee</v-btn> -->
+          <v-btn block @click="relateUsertoTablet">relateUsertoTablet</v-btn>
           <v-btn block @click="gotoProfile">gotoProfile</v-btn>
           <v-btn block @click="gotoProfile">gotoProfile</v-btn>
+          <v-btn block @click="disconnect">disconnect</v-btn>
+          <v-btn block @click="enableWebNotifications">enableWebNotifications</v-btn>
         </v-card>
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -25,7 +27,9 @@
   </v-app>
 </template>
 <script>
-import * as CB from 'cloudboost'
+import { CB } from './helper/api'
+var x = new CB()
+
 import store from './store'
 export default {
   name: 'app',
@@ -33,6 +37,37 @@ export default {
     console.log(store.getters['auth/checkLogin'])
   },
   methods: {
+    enableWebNotifications() {
+      console.log(this.$CB.CloudPush)
+      // var query = new this.$CB.CloudQuery('Device')
+      // query.containedIn('channels', 'hackers')
+
+      this.$CB.CloudPush.enableWebNotifications({
+        success: function() {
+          console.info('huzzah')
+
+          //Success
+        },
+        error: function(error) {
+          console.log(error)
+
+          //Error
+        }
+      })
+    },
+    disconnect() {
+      console.log(this.$CB.CloudUser)
+      this.$CB.CloudUser.current.logOut({
+        success: function(user) {
+          //log out successfull
+        },
+        error: function(err) {
+          //Error occured in user registration.
+        }
+      })
+      console.log(this.$CB.CloudUser.logout())
+      // x.logoutUser()
+    },
     gotoProfile() {
       this.$router.push({ path: '/profile:iMHpE4bb' })
     },
@@ -52,9 +87,9 @@ export default {
     },
     createUser() {
       var user = new CB.CloudUser()
-      user.set('username', 'browser2')
-      user.set('password', 'asdfasdf')
-      user.set('email', 'browser@sample.com')
+      user.set('username', '27f18c1fe85f37130346d478cdaf1b49')
+      user.set('password', '27f18c1fe85f37130346d478cdaf1b49')
+      user.set('email', '27f18c1fe85f37130346d478cdaf1b49@sample.com')
       user.signUp({
         success: function(user) {
           console.log(user)
@@ -83,11 +118,25 @@ export default {
       })
     },
     relateTabletUser() {
-      var query = new CB.CloudQuery('User')
-      query.equalTo('username', 'browser') //find all Students who age is 21
+      var query = new CB.CloudQuery('Tablet')
+      query.equalTo('deviceId', '27f18c1fe85f37130346d478cdaf1b49') //find all Students who age is 21
       query.findOne({
         success: function(obj) {
-          obj.relate('tablet', 'Tablet', 'sFaZ4VqR')
+          obj.relate('user', 'User', 'qi0FWQuS')
+          console.log(obj)
+        },
+        error: function(err) {
+          //Error in retrieving the data.
+          console.error(err)
+        }
+      })
+    },
+    relateUsertoTablet() {
+      var query = new CB.CloudQuery('User')
+      query.equalTo('username', '27f18c1fe85f37130346d478cdaf1b49') //find all Students who age is 21
+      query.findOne({
+        success: function(obj) {
+          obj.relate('tablet', 'Tablet', 'blgOOdaa')
           console.log(obj)
         },
         error: function(err) {
@@ -98,12 +147,12 @@ export default {
     },
     addTablet() {
       var obj = new CB.CloudObject('Tablet')
-      obj.set('deviceId', 'browser')
+      obj.set('deviceId', '27f18c1fe85f37130346d478cdaf1b49')
       obj.set('employeeList', [])
       obj.save({
         success: function(obj) {
           console.log(obj) //a new id is automatically generated.
-          obj.relate('user', 'User', 'Q5PLv7Aj') //relates the teacher in the Teacher table with id xxxxx to this student.
+          obj.relate('user', 'User', 'qi0FWQuS') //relates the teacher in the Teacher table with id xxxxx to this student.
         },
         error: function(error) {
           //object failed to save.
@@ -153,7 +202,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  background-color: #017aaa;
 }
 
 #nav {
